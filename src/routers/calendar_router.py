@@ -29,22 +29,24 @@ def get_auth_url(user_email: str):
 @router.get("/auth/callback")
 def auth_callback(code: str, state: Optional[str] = None, db: Session = Depends(get_db)):
     """
-    Endpoint de callback. O Google redireciona o usuário para cá após o login.
-    Este endpoint não deve ser chamado diretamente pelo frontend.
-    O email do usuário precisa ser passado de alguma forma, o `state` é ideal para isso.
+    Endpoint de callback que processa e redireciona para o frontend.
     """
-
     user_email = state
 
     if not user_email:
-        raise HTTPException(status_code=400, detail="Email do usuário não encontrado no estado da requisição.")
+        frontend_url = f"http://localhost:3000/jogos?error=missing_email"
+        return RedirectResponse(url=frontend_url)
 
     try:
         auth_service.fetch_tokens_and_save(code, user_email, db)
-        return {"status": "success", "message": "Autenticação concluída com sucesso!"}
+        
+        frontend_url = f"http://localhost:3000/calendar/callback?status=success&user_email={user_email}"
+        return RedirectResponse(url=frontend_url)
+        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao processar o token: {str(e)}")
-
+        print(f"Erro no callback: {str(e)}")
+        frontend_url = f"http://localhost:3000/jogos?error=auth_failed&message={str(e)}"
+        return RedirectResponse(url=frontend_url)
 
 @router.post("/events", response_model=schemas.StatusResponse)
 def create_event(event_data: schemas.CalendarEventCreate, db: Session = Depends(get_db)):
