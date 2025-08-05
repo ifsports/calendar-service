@@ -12,7 +12,7 @@ import json
 
 CLIENT_SECRETS_FILE = 'config/google_credentials.json'
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-REDIRECT_URI = "http://35.215.219.1/api/v1/calendar/auth/callback"
+REDIRECT_URI = "http://localhost:3000/api/v1/calendar/auth/callback"
 
 
 class GoogleAuthService:
