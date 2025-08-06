@@ -4,7 +4,7 @@ Um serviço de calendário moderno e eficiente para gerenciamento de eventos e a
 
 ## 📋 Sobre o Projeto
 
-O Calendar Service é uma solução robusta desenvolvida em FastAPI para gerenciamento de calendários, eventos e agendamentos. Este serviço oferece uma API RESTful completa para integração com aplicações web e mobile.
+O Calendar Service é uma solução robusta desenvolvida em FastAPI para sincronização de jogos do IFSports com o Google Calendar.
 
 ## ✨ Funcionalidades
 
