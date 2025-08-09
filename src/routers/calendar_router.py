@@ -59,7 +59,7 @@ def auth_callback(code: str, state: Optional[str] = None, db: Session = Depends(
     try:
         auth_service.fetch_tokens_and_save(code, user_email, db)
 
-        frontend_url = f"http://localhost:3000/calendar/callback?status=success&user_email={user_email}"
+        frontend_url = f"http://localhost:3000/api/v1/calendar/auth/callback?status=success&user_email={user_email}"
         return RedirectResponse(url=frontend_url)
 
     except Exception as e:
